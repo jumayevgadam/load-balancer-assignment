@@ -1,0 +1,76 @@
+version: "2"
+run:
+  tests: true
+linters:
+  enable:
+    - errname
+    - errorlint
+    - exhaustive
+    - forcetypeassert
+    - gochecknoinits
+    - gocognit
+    - goconst
+    - godot
+    - makezero
+    - mnd
+    - nakedret
+    - ineffassign
+    - bodyclose
+    - revive
+    - errcheck
+    - nilerr
+    - nilnil
+    - nlreturn
+    - nolintlint
+    - prealloc
+    - reassign
+    - rowserrcheck
+    - sqlclosecheck
+    - gosec
+    - unconvert
+    - unparam
+    - whitespace
+    - govet
+    - wsl
+  settings:
+    revive:
+      rules:
+        - name: package-comments
+          disabled: true
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    goconst:
+      min-len: 2
+      min-occurrences: 2
+    nlreturn:
+      block-size: 4
+    nolintlint:
+      require-explanation: true
+      require-specific: true
+    wsl:
+      allow-assign-and-anything: true
+      allow-cuddle-declarations: true
+      force-err-cuddling: true
+    gocognit:
+      min-complexity: 36
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
+    - goimports
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
