@@ -34,7 +34,6 @@ func main() {
 	case *selector.BasicBalancer:
 		for i := 0; i < 6; i++ {
 			fmt.Println(b.NextServer().Host())
-		}
-		// also will come here other levels.
+		} // also will come here other levels.
 	}
 }

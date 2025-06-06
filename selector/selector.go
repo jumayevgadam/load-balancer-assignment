@@ -27,7 +27,7 @@ func (b *backendImpl) Invoke(ctx context.Context, req golb.Request) (golb.Respon
 	return fmt.Sprintf("addr: %s, req: %v", b.addr, req), nil
 }
 
-// Host returns the backend's address
+// Host returns the backend's address.
 func (b *backendImpl) Host() string {
 	return b.addr
 }
