@@ -12,8 +12,8 @@ import (
 
 const (
 	httpClientTimeOut = 5 * time.Second
-
-	maxFailureCount = 3
+	maxFailureCount   = 3
+	recoveryTimeOut   = 2 * time.Second
 )
 
 type (
@@ -92,15 +92,16 @@ func (b *BackendImpl) Host() string {
 
 // IsHealthy checks if the backend is healthy.
 func (b *BackendImpl) IsHealthy() bool {
-	b.mu.Lock()
-	defer b.mu.Unlock()
-
+	//
 	if atomic.LoadInt32(&b.healthy) == 1 {
 		return true
 	}
 
+	b.mu.Lock()
+	defer b.mu.Unlock()
+
 	// recover backend after some recovery time.
-	if time.Since(b.lastFailure) > 2*time.Second {
+	if time.Since(b.lastFailure) > recoveryTimeOut {
 		log.Printf("backend %s recovered", b.addr)
 		atomic.StoreInt32(&b.healthy, 1)
 		b.failureCount = 0

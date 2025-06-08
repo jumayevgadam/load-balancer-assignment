@@ -60,7 +60,13 @@ func main() {
 		}
 	case *golb.AdvancedBalancer:
 		for i := 0; i < 6; i++ {
-			fmt.Println(b.GetNextServer().Host())
+			if backend := b.GetNextServer(); backend != nil {
+				fmt.Println(backend.Host())
+			} else {
+				fmt.Println("No healthy backend available")
+			}
 		}
+
+		b.StopHealthChecker() // stop the health checker before exiting.
 	}
 }
